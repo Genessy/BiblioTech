@@ -9,10 +9,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   imports: [RouterOutlet, NavbarComponent],
   template: `
   <app-navbar/>
-  <main>
+  <main class="flex justify-center items-center h-screen">
   <router-outlet> </router-outlet>
   </main>
-  <h1 class="text-3xl text-red-500 font-bold border border-red-300">HOLA AMIGO</h1>
   `
 })
 export class AppComponent {
