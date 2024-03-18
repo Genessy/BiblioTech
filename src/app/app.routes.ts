@@ -4,6 +4,7 @@ import { ConnectionComponent } from './views/connection/connection.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { BookCreationComponent } from './views/book-creation/book-creation.component';
 import { RegistrationComponent } from './views/registration/registration.component';
+import { BookDetailComponent } from './views/book-detail/book-detail.component';
 
 export const routes: Routes = [
     {path: '', component: LandingComponent},
@@ -11,4 +12,5 @@ export const routes: Routes = [
     {path: 'registration', component: RegistrationComponent},
     {path: 'profile', component: ProfileComponent},
     {path: 'bookcreation', component: BookCreationComponent},
+    {path: 'book/:id', component: BookDetailComponent},
 ];
