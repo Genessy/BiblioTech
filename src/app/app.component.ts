@@ -9,7 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   imports: [RouterOutlet, NavbarComponent],
   template: `
   <app-navbar/>
-  <main class="flex justify-center items-center h-screen">
+  <main class="flex flex-col items-center min-h-screen w-4/5 m-auto">
   <router-outlet> </router-outlet>
   </main>
   `
