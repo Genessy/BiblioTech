@@ -8,8 +8,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   standalone: true,
   imports: [RouterOutlet, NavbarComponent],
   template: `
-  <app-navbar/>
-  <main class="flex flex-col items-center min-h-screen w-4/5 m-auto">
+  <app-navbar />
+  <main class="pt-20">
   <router-outlet> </router-outlet>
   </main>
   `
