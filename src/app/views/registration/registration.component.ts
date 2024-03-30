@@ -87,7 +87,6 @@ import { RouterModule } from '@angular/router';
       </div>
     </form>
   </app-card>`,
-  styleUrl: './registration.component.css'
 })
 export class RegistrationComponent {
 
