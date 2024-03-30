@@ -30,7 +30,6 @@ import { Component, Input } from '@angular/core';
 </div>
 
   `,
-  styleUrl: './dropdown.component.css'
 })
 export class DropdownComponent {
 @Input() categories: String[] = []
