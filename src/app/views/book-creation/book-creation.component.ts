@@ -48,6 +48,5 @@ import { RouterModule } from '@angular/router';
       </button>
     </form>
   </app-card>`,
-  styleUrl: './book-creation.component.css',
 })
 export class BookCreationComponent {}

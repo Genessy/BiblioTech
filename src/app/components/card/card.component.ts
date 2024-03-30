@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
   <ng-content ></ng-content>
 </div>
 `,
-  styleUrl: './card.component.css'
 })
 export class CardComponent {
 
