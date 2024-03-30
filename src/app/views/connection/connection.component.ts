@@ -54,6 +54,5 @@ import { CardComponent } from '../../components/card/card.component';
       </div>
     </form>
   </app-card>`,
-  styleUrl: './connection.component.css',
 })
 export class ConnectionComponent {}
