@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-book-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
     <figure
       class="bg-gray-800 flex flex-col md:flex-row gap-4 w-80 p-7 rounded-xl text-white items-center"
@@ -25,7 +26,9 @@ import { Component, Input } from '@angular/core';
           </div>
         </div>
       </div>
-      <span class="material-symbols-outlined ml-auto"> arrow_forward_ios </span>
+      <a [routerLink]="['book', id]">
+        <span class="material-symbols-outlined ml-auto"> arrow_forward_ios </span>
+      </a>
     </figure>
   `,
 })
@@ -33,4 +36,5 @@ export class BookCardComponent {
   @Input() title!: string;
   @Input() categoryTitle!: string;
   @Input() categories!: string[];
+  @Input() id!: number;
 }

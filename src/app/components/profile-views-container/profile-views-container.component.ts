@@ -21,42 +21,42 @@ import { ProfileTabContainerComponent } from '../profile-tab-container/profile-t
   ],
   template: `
     <section class="bg-gray-50 rounded-b p-6">
-      <app-books-tab-container [books]="books" *ngIf="activeTab === 1"/>
+      <app-books-tab-container  *ngIf="activeTab === 1"/>
      <app-profile-tab-container *ngIf="activeTab === 0" [user]="user" />
     </section>
   `,
 })
 export class ProfileViewsContainerComponent {
   @Input() activeTab!: number;
-  books: Book[] = [
-    {
-      id: 0,
-      title: 'My fist book',
-      resume: 'This is a beatiful resume of my first book',
-      image: '',
-      categories: ['fiction'],
-      createdAt: '12/10/2045',
-      updatedAt: '23/23/3544',
-    },
-    {
-      id: 0,
-      title: 'My second book',
-      resume: 'This is a beatiful resume of my first book',
-      image: '',
-      categories: ['action', 'fiction'],
-      createdAt: '12/10/2045',
-      updatedAt: '23/23/3544',
-    },
-    {
-      id: 0,
-      title: 'My third book',
-      resume: 'This is a beatiful resume of my first book',
-      image: '',
-      categories: ['action', 'fiction', 'romance'],
-      createdAt: '12/10/2045',
-      updatedAt: '23/23/3544',
-    },
-  ];
+  // books: Book[] = [
+  //   {
+  //     id: 0,
+  //     title: 'My fist book',
+  //     resume: 'This is a beatiful resume of my first book',
+  //     image: '',
+  //     categories: ['fiction'],
+  //     createdAt: '12/10/2045',
+  //     updatedAt: '23/23/3544',
+  //   },
+  //   {
+  //     id: 0,
+  //     title: 'My second book',
+  //     resume: 'This is a beatiful resume of my first book',
+  //     image: '',
+  //     categories: ['action', 'fiction'],
+  //     createdAt: '12/10/2045',
+  //     updatedAt: '23/23/3544',
+  //   },
+  //   {
+  //     id: 0,
+  //     title: 'My third book',
+  //     resume: 'This is a beatiful resume of my first book',
+  //     image: '',
+  //     categories: ['action', 'fiction', 'romance'],
+  //     createdAt: '12/10/2045',
+  //     updatedAt: '23/23/3544',
+  //   },
+  // ];
 
   user: User = {
     id: 0,
