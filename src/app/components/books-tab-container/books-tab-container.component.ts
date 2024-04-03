@@ -26,6 +26,7 @@ import { RouterModule } from '@angular/router';
           [title]="book.title"
           categoryTitle="Categories"
           [categories]="book.categories"
+          [id]="book.id"
         />
       </div>
     </div>

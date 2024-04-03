@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
-import { books, categories } from './bibliotech';
+import { books, categories, users } from './bibliotech';
 
 
 @Injectable({
@@ -13,7 +13,8 @@ export class InMemoryDataService implements InMemoryDbService {
   createDb() {
       const booksList = books;
       const categoriesList = categories;
-      return {booksList, categoriesList};
+      const userList = users
+      return {booksList, categoriesList, userList};
   }
 }
 

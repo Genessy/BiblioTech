@@ -26,7 +26,7 @@ import { RouterLink } from '@angular/router';
           </div>
         </div>
       </div>
-      <a [routerLink]="['book', id]">
+      <a [routerLink]="['/book', id]">
         <span class="material-symbols-outlined ml-auto"> arrow_forward_ios </span>
       </a>
     </figure>
