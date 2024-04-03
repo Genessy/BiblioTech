@@ -10,7 +10,7 @@ export const routes: Routes = [
     {path: '', component: LandingComponent},
     {path: 'signup', component: ConnectionComponent},
     {path: 'registration', component: RegistrationComponent},
-    {path: 'profile', component: ProfileComponent},
+    {path: 'profile/:id', component: ProfileComponent},
     {path: 'bookcreation', component: BookCreationComponent},
     {path: 'book/:id', component: BookDetailComponent},
 ];

@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { AsideBarComponent } from '../../components/aside-bar/aside-bar.component';
 import { ProfileViewsContainerComponent } from '../../components/profile-views-container/profile-views-container.component';
 import { CommonModule } from '@angular/common';
+import { UsersService } from '../../services/users.service';
+import { ActivatedRoute } from '@angular/router';
+import { User } from '../../interfaces/user';
+import { BooksService } from '../../services/books.service';
+import { Book } from '../../interfaces/book';
 interface Tab {
   id: number;
   label: string;
@@ -10,9 +15,8 @@ interface Tab {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [AsideBarComponent, ProfileViewsContainerComponent, CommonModule],
-  template: ` <section class="mt-11">
-    <!-- <app-aside-bar /> -->
+  imports: [ProfileViewsContainerComponent, CommonModule],
+  template: ` <section class="mt-11" *ngIf="userInfo">
     <div class="mx-auto w-fit">
       <div
         class="relative w-14 h-14 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 mx-auto"
@@ -30,7 +34,7 @@ interface Tab {
           ></path>
         </svg>
       </div>
-      <h2 class="font-semibold">User name</h2>
+      <h2 class="font-semibold text-center">{{ userInfo.firstname + ' ' + userInfo.lastname }}</h2>
     </div>
     <div class="mt-9">
       <div class="sm:hidden">
@@ -64,10 +68,12 @@ interface Tab {
         </ng-template>
       </ul>
     </div>
-    <app-profile-views-container [activeTab]="activeTab" />
+    <app-profile-views-container [activeTab]="activeTab" [user]="userInfo" [books]="userBooks"/>
   </section>`,
 })
 export class ProfileComponent {
+
+  constructor(private userService: UsersService, private route: ActivatedRoute, private bookserice: BooksService) {}
   tabsname: Tab[] = [
     { id: 0, label: 'Profil' },
     { id: 1, label: 'Livres' },
@@ -85,4 +91,22 @@ export class ProfileComponent {
       this.activeTab = selectedOption.id;
     }
   };
+
+  userInfo!: User;
+  userBooks!: Book[];
+
+  ngOnInit(): void {
+    this.route.params.subscribe(({ id }) => {
+      this.userService.getUserById(id).subscribe((user) => {
+        this.userInfo = user;
+      });
+
+      this.bookserice.getBooksByAuthor(id).subscribe((books) => {
+        this.userBooks = books;
+        
+      });
+    });
+  }
+
+  
 }
