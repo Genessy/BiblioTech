@@ -17,7 +17,7 @@ export class UsersService {
   getUserById(id: number): Observable<User> {
     return this.http.get<User>(`${this.basePath}/userList/${id}`);
   }
-  
+
   createUser(user: {}): Observable<User> {
     const userBody = {...user, role: 'user'}
     return this.http.post<User>(`${this.basePath}/userList`, userBody).pipe(
