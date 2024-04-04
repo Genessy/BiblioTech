@@ -56,6 +56,5 @@ import { RouterModule } from '@angular/router';
       </div>
     </form>
   </app-card>`,
-  styleUrl: './connection.component.css',
 })
 export class ConnectionComponent {}
