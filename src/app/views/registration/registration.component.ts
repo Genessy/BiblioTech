@@ -19,7 +19,7 @@ import { UsersService } from '../../services/users.service';
       <app-card>
         <form
           class="space-y-6 p-8"
-          (submit)="logInUser(); $event.preventDefault()"
+          (submit)="registerUser(); $event.preventDefault()"
           [formGroup]="user"
         >
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">
@@ -107,6 +107,7 @@ import { UsersService } from '../../services/users.service';
     </section>
   `,
 })
+
 export class RegistrationComponent {
   constructor(private userService: UsersService, private router: Router) {}
   user = new FormGroup({
@@ -116,12 +117,15 @@ export class RegistrationComponent {
     password: new FormControl('', Validators.required),
   });
 
-  logInUser(): void {
+  registerUser(): void {
     if (this.user.valid) {
-      this.userService.createUser(this.user.value).subscribe((user) => {
-        if (user) {
-          
-          this.router.navigate(['/profile', user.id]);
+      this.userService.createUser(this.user.value).subscribe({
+        next: (user) => {
+          console.log('Inscription réussie', user);
+          this.router.navigate(['/profile', user.id]); // Assurez-vous que le routeur est configuré correctement pour cela
+        },
+        error: (error) => {
+          console.error('Erreur lors de l’inscription', error);
         }
       });
     }
