@@ -15,7 +15,7 @@ import { UsersService } from '../../services/users.service';
   standalone: true,
   imports: [CardComponent, RouterModule, ReactiveFormsModule],
   template: `
-    <section>
+    <section class="flex justify-center">
       <app-card>
         <form
           class="space-y-6 p-8"
