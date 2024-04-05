@@ -63,20 +63,29 @@ export class CreationPageComponent {
   pageContent = new FormControl('');
   bookId!: number
   
-  constructor(private route: ActivatedRoute, private bookService: BooksService){}
+  constructor(private router: Router, private route: ActivatedRoute, private bookService: BooksService){}
   ngOnInit() {
     this.route.params.subscribe(({ id }) => {
       this.bookId = id;
     });
   }
-  addPageToBook(){
-    const pageInformation = {title : this.pageTitle, content: this.pageContent, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),}
-    this.bookService.addPage(this.bookId, pageInformation).subscribe((page)=>{
-      console.log(page)
-    })
+  addPageToBook() {
+    const pageInformation = {
+      title: this.pageTitle.value,
+      content: this.pageContent.value,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    
+    this.bookService.addPage(this.bookId, pageInformation).subscribe((page) => {
+      console.log(page);
+      if (page) {
+        this.router.navigate(['/book', page.id]);
+      } 
+    }, (error) => {
+      console.error('Erreur lors de l’ajout de la page :', error);
+    });
   }
-  
-  
 }
 
 

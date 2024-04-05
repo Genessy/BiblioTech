@@ -89,14 +89,13 @@ export class BooksService {
   }
 
   addPage(bookId: number, page: any): Observable<Book> {
-    return this.http
-      .post<Page>(`${this.basePath}/booksList/${bookId}/pages`, page)
-      .pipe(
-        switchMap(() => this.getBookById(bookId)),
-        catchError((error: HttpErrorResponse) => {
-          console.error(error);
-          return throwError(error);
-        })
-      );
+    let book: Book;
+    return this.getBookById(bookId).pipe(
+      switchMap((retrievedBook) => {
+        book = retrievedBook;
+        book.pages.push(page);
+        return this.modifyBook(book);
+      })
+    );
   }
 }
