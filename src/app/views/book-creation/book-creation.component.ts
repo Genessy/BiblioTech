@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CardComponent } from '../../components/card/card.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BooksService } from '../../services/books.service';
+import { Book } from '../../interfaces/book';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { BooksService } from '../../services/books.service';
   template: `
     <section class="flex justify-center items-center h-fit">
       <app-card class="my-auto">
-        <form class="space-y-6 p-8" (submit)="createBook(); $event.preventDefault()">
+        <form 
+          class="space-y-6 p-8" (submit)="createBook(); $event.preventDefault()">
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">
             Créer un livre
           </h5>
@@ -60,8 +62,33 @@ export class BookCreationComponent {
   pageTitle = new FormControl('');
   pageContent = new FormControl('');
 
-  constructor(bookService: BooksService) {}
+  constructor(private bookService: BooksService, private router: Router) {}
   createBook() {
+    const newBook = {
+      title: this.pageTitle.value ?? '',
+      resume: this.pageContent.value ?? '',
+      image: '',
+      pages: [],
+      author: '',
+      categories: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    console.log(newBook);
     
+    this.bookService.createBook(newBook).subscribe({
+      next: (book) => {
+        if (book) {
+          console.log('Livre créé avec succès:', book);
+          this.router.navigate(['/book', book.id]);
+        } else {
+          console.log('La création du livre a réussi, mais la réponse est vide.');
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors de la création du livre:', error);
+      }
+    });
   }
 }

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, take, tap, throwError  } from 'rxjs';
 import { Book } from '../interfaces/book';
 import { Categorie } from '../interfaces/categorie';
 
@@ -20,9 +20,17 @@ export class BooksService {
     return this.http.get<Book>(`${this.basePath}/booksList/${id}`);
   }
 
-  createBook(book: Book): Observable<Book> {
-    return this.http.post<Book>(`${this.basePath}/booksList`, book);
-  }
+  createBook(book: any): Observable<Book> {
+    console.log('---RUUUN---');
+        return this.http.post<Book>(`${this.basePath}/booksList`, book).pipe(
+          tap(() => console.log('Book created!')),
+          catchError((error: HttpErrorResponse) => {
+            console.error(error);
+            return throwError(error);
+          })
+        );
+      }
+  
   getCategoryById(id: number): Observable<Categorie> {
     return this.http.get<any>(`${this.basePath}/categoriesList/${id}`);
   }
