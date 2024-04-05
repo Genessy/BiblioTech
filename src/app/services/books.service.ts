@@ -87,7 +87,6 @@ export class BooksService {
       })
     );
   }
-
   addPage(bookId: number, page: any): Observable<Book> {
     let book: Book;
     return this.getBookById(bookId).pipe(

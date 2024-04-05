@@ -9,6 +9,7 @@ import { MyBooksViewComponent } from './views/my-books-view/my-books-view.compon
 import { authGuard } from './guards/auth.guard';
 import { CreationPageComponent } from './views/creation-page/creation-page.component';
 
+
 export const routes: Routes = [
     {path: '', canActivate: [authGuard], component: LandingComponent},
     {path: 'signup',  component: ConnectionComponent},
@@ -18,4 +19,5 @@ export const routes: Routes = [
     {path: 'book/:id', canActivate: [authGuard],  component: BookDetailComponent},
     {path: 'myBooks', canActivate: [authGuard], component: MyBooksViewComponent},
     {path: 'pageCreation/:id', canActivate: [authGuard], component: CreationPageComponent}
+    {path: 'myBooks', canActivate: [authGuard], component: MyBooksViewComponent}
 ];
