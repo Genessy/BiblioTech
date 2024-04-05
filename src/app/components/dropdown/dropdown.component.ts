@@ -58,8 +58,6 @@ export class DropdownComponent {
   @Output() fetchBooksByCategoryEvent = new EventEmitter<string>();
 
   fetchBooksByCategory(category: string) {
-    console.log('RUUUUUN4');
-    
     this.fetchBooksByCategoryEvent.emit(category);
   }
 }

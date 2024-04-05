@@ -3,7 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Page } from '../../interfaces/page';
 import { ButtonAltComponent } from '../shared/button-alt/button-alt.component';
 import { SolidButtonComponent } from '../shared/solid-button/solid-button.component';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterModule } from '@angular/router';
+import { BooksService } from '../../services/books.service';
 
 @Component({
   selector: 'app-aside-bar',
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
     ButtonAltComponent,
     SolidButtonComponent,
     RouterModule,
+    ButtonAltComponent,
   ],
   template: ` <aside
     id="logo-sidebar"
@@ -49,26 +51,52 @@ import { RouterModule } from '@angular/router';
           </ng-template>
         </li>
       </ul>
-      <div class="flex justify-center pt-5">
+      <div class="flex flex-col items-center justify-center pt-5">
         <router-link [routerLink]="['/bookcreation']">
           <app-solid-button
             label="Créer une page"
             icon="add_circle"
-            class="mx-auto"
+            *ngIf="isAdminOrAuthor"
           />
         </router-link>
+        <app-button-alt
+          label="Supprimer livre"
+          icon="delete"
+          class="mx-auto"
+          (click)="deleteBook()"
+        />
       </div>
     </div>
   </aside>`,
 })
 export class AsideBarComponent {
   @Input() pages: Page[] | [] = [];
-  @Input() activePage!: number
+  @Input() activePage!: number;
+  @Input() isAdminOrAuthor: boolean = false;
   @Output() selectedPage = new EventEmitter<number>();
 
-  currentPage: number = this.activePage!
+  constructor(
+    private bookService: BooksService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+  bookId!: number;
+  currentPage: number = this.activePage!;
   selectPage(id: number) {
     this.currentPage = id;
     this.selectedPage.emit(id);
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(({ id }) => {
+      this.bookId = id;
+    });
+  }
+  deleteBook() {
+    this.bookService.deleteBook(this.bookId).subscribe((book) => {
+      if (book) {
+        this.router.navigateByUrl('myBooks');
+      }
+    });
   }
 }

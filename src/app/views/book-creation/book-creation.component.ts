@@ -4,21 +4,32 @@ import { Router, RouterModule } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../interfaces/book';
-
+import { UsersService } from '../../services/users.service';
+import { DropdownComponent } from '../../components/dropdown/dropdown.component';
+import { Categorie } from '../../interfaces/categorie';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-creation',
   standalone: true,
-  imports: [CardComponent, RouterModule, ReactiveFormsModule],
+  imports: [
+    CardComponent,
+    RouterModule,
+    ReactiveFormsModule,
+    DropdownComponent,
+    CommonModule
+  ],
   template: `
     <section class="flex justify-center items-center h-fit">
       <app-card class="my-auto">
-        <form 
-          class="space-y-6 p-8" (submit)="createBook(); $event.preventDefault()">
+        <form
+          class="space-y-6 p-8"
+          (submit)="createBook(); $event.preventDefault()"
+        >
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">
             Créer un livre
           </h5>
-          <div>
+          <div class="mb-2">
             <label
               for="title"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -33,6 +44,16 @@ import { Book } from '../../interfaces/book';
               [formControl]="pageTitle"
               required
             />
+          </div>
+          <div>
+            <app-dropdown
+              [categories]="categories"
+              class="mt-2"
+              (fetchBooksByCategoryEvent)="addCategory($event)"
+            />
+            <div class="mt-3 flex flex-wrap gap-3">
+              <span *ngFor="let item of selecteCategories" class="p-2 bg-blue-600 text-white rounded-lg"> {{ item }}</span>
+            </div>
           </div>
           <div>
             <label
@@ -62,33 +83,49 @@ export class BookCreationComponent {
   pageTitle = new FormControl('');
   pageContent = new FormControl('');
 
-  constructor(private bookService: BooksService, private router: Router) {}
+  constructor(
+    private bookService: BooksService,
+    private router: Router,
+    private userService: UsersService
+  ) {}
+  categories: Categorie[] = [];
+  ngOnInit() {
+    this.bookService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
+  }
+
+  selecteCategories: string[] = [];
+  addCategory(cat: string) {
+    if (!this.selecteCategories.includes(cat)) {
+      this.selecteCategories.push(cat);
+    }
+  }
   createBook() {
-    const newBook = {
+    const newBook  = {
       title: this.pageTitle.value ?? '',
       resume: this.pageContent.value ?? '',
       image: '',
       pages: [],
-      author: '',
-      categories: [],
+      author: this.userService.currentUser?.id,
+      categories: this.selecteCategories,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-
-    console.log(newBook);
-    
     this.bookService.createBook(newBook).subscribe({
       next: (book) => {
         if (book) {
           console.log('Livre créé avec succès:', book);
           this.router.navigate(['/book', book.id]);
         } else {
-          console.log('La création du livre a réussi, mais la réponse est vide.');
+          console.log(
+            'La création du livre a réussi, mais la réponse est vide.'
+          );
         }
       },
       error: (error) => {
         console.error('Erreur lors de la création du livre:', error);
-      }
+      },
     });
   }
 }
