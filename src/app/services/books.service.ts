@@ -21,7 +21,6 @@ export class BooksService {
   }
 
   createBook(book: any): Observable<Book> {
-    console.log('---RUUUN---');
         return this.http.post<Book>(`${this.basePath}/booksList`, book).pipe(
           tap(() => console.log('Book created!')),
           catchError((error: HttpErrorResponse) => {
@@ -76,7 +75,16 @@ export class BooksService {
     }
   }
 
-  deleteBook(id: number): Observable<Book> {
-    return this.http.delete<Book>(`${this.basePath}/booksList/${id}`);
+  deleteBook(id: number): Observable<string> {
+    console.log(id);
+    
+    return this.http.delete(`${this.basePath}/booksList/${id}`).pipe(
+      tap(() => console.log('Book deleted!')),
+      switchMap(() => 'Book deleted!'),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        return throwError(error);
+      })
+    );
   }
 }

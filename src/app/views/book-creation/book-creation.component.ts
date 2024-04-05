@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../interfaces/book';
+import { UsersService } from '../../services/users.service';
 
 
 @Component({
@@ -62,14 +63,15 @@ export class BookCreationComponent {
   pageTitle = new FormControl('');
   pageContent = new FormControl('');
 
-  constructor(private bookService: BooksService, private router: Router) {}
+  constructor(private bookService: BooksService, private router: Router, private userService: UsersService) {}
+  
   createBook() {
     const newBook = {
       title: this.pageTitle.value ?? '',
       resume: this.pageContent.value ?? '',
       image: '',
       pages: [],
-      author: '',
+      author: this.userService.currentUser?.id,
       categories: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

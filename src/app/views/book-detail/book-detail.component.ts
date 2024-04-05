@@ -112,7 +112,8 @@ export class BookDetailComponent {
   currentPage: number = null!;
   CanEdit: boolean = false;
   isEditionMode: boolean = false;
-  isAdmin: boolean  = this.userService.currentUser?.role.includes('Admin') || false
+  isAdmin: boolean =
+    this.userService.currentUser?.role.includes('Admin') || false;
 
   get pages(): Page[] | [] {
     return this.bookDetails?.pages! || [];
@@ -128,12 +129,9 @@ export class BookDetailComponent {
 
   savePageChanges(): void {
     if (this.selectedPage) {
-      
       this.bookService.modifyPage(this.selectedPage, Number(this.postId));
-      
     } else {
       if (this.bookDetails) {
-        
         this.bookService.modifyBook(this.bookDetails).subscribe((book) => {
           if (book) {
             this.bookDetails = book;
