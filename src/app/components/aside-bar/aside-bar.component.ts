@@ -65,7 +65,7 @@ import { RouterModule } from '@angular/router';
 export class AsideBarComponent {
   @Input() pages: Page[] | [] = [];
   @Input() activePage!: number
-  @Input() isAdminOrAuthor!: boolean
+  @Input() isAdminOrAuthor: boolean = false;
   @Output() selectedPage = new EventEmitter<number>();
 
   currentPage: number = this.activePage!

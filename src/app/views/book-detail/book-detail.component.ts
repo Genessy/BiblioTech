@@ -25,14 +25,14 @@ import { FormsModule } from '@angular/forms';
       [pages]="bookDetails?.pages || []"
       (selectedPage)="getPage($event)"
       [activePage]="currentPage"
-      [isAdminOrAuthor]="isBookAuthor"
+      [isAdminOrAuthor]="CanEdit || isAdmin"
     />
     <div class="p-4 sm:ml-64">
       <div class="flex justify-end">
         <app-solid-button
           label="Editier"
           icon="edit_note"
-          *ngIf="isBookAuthor"
+          *ngIf="CanEdit || isAdmin"
           (click)="toggleEditionMode()"
         />
       </div>
@@ -110,8 +110,9 @@ export class BookDetailComponent {
   bookDetails?: Book;
   selectedPage?: Page | null;
   currentPage: number = null!;
-  isBookAuthor: boolean = false;
+  CanEdit: boolean = false;
   isEditionMode: boolean = false;
+  isAdmin: boolean  = this.userService.currentUser?.role.includes('Admin') || false
 
   get pages(): Page[] | [] {
     return this.bookDetails?.pages! || [];
@@ -148,7 +149,7 @@ export class BookDetailComponent {
       this.postId = Number(id);
       this.bookService.getBookById(this.postId).subscribe((book) => {
         this.bookDetails = book;
-        this.isBookAuthor = this.userService.isUserBookAuthor(
+        this.CanEdit = this.userService.isUserBookAuthor(
           Number(this.bookDetails?.author)
         );
       });
