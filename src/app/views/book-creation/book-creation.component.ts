@@ -64,8 +64,7 @@ export class BookCreationComponent {
 
   constructor(private bookService: BooksService, private router: Router) {}
   createBook() {
-    const newBook: Book = {
-      id: 0,
+    const newBook = {
       title: this.pageTitle.value ?? '',
       resume: this.pageContent.value ?? '',
       image: '',
@@ -76,6 +75,8 @@ export class BookCreationComponent {
       updatedAt: new Date().toISOString(),
     };
 
+    console.log(newBook);
+    
     this.bookService.createBook(newBook).subscribe({
       next: (book) => {
         if (book) {
