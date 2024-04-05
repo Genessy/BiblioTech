@@ -87,4 +87,14 @@ export class BooksService {
       })
     );
   }
+  addPage(bookId: number, page: any): Observable<Book> {
+    let book: Book;
+    return this.getBookById(bookId).pipe(
+      switchMap((retrievedBook) => {
+        book = retrievedBook;
+        book.pages.push(page);
+        return this.modifyBook(book);
+      })
+    );
+  }
 }

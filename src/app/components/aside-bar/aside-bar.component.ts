@@ -52,7 +52,8 @@ import { BooksService } from '../../services/books.service';
         </li>
       </ul>
       <div class="flex flex-col items-center justify-center pt-5">
-        <router-link [routerLink]="['/bookcreation']">
+        <router-link [routerLink]="['/pageCreation', bookId]">
+
           <app-solid-button
             label="Créer une page"
             icon="add_circle"

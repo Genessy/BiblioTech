@@ -7,6 +7,8 @@ import { RegistrationComponent } from './views/registration/registration.compone
 import { BookDetailComponent } from './views/book-detail/book-detail.component';
 import { MyBooksViewComponent } from './views/my-books-view/my-books-view.component';
 import { authGuard } from './guards/auth.guard';
+import { CreationPageComponent } from './views/creation-page/creation-page.component';
+
 
 export const routes: Routes = [
     {path: '', canActivate: [authGuard], component: LandingComponent},
@@ -15,5 +17,7 @@ export const routes: Routes = [
     {path: 'profile', canActivate: [authGuard],  component: ProfileComponent},
     {path: 'bookcreation', canActivate: [authGuard],  component: BookCreationComponent},
     {path: 'book/:id', canActivate: [authGuard],  component: BookDetailComponent},
+    {path: 'myBooks', canActivate: [authGuard], component: MyBooksViewComponent},
+    {path: 'pageCreation/:id', canActivate: [authGuard], component: CreationPageComponent}
     {path: 'myBooks', canActivate: [authGuard], component: MyBooksViewComponent}
 ];
