@@ -122,7 +122,7 @@ export class RegistrationComponent {
       this.userService.createUser(this.user.value).subscribe({
         next: (user) => {
           console.log('Inscription réussie', user);
-          this.router.navigate(['/profile', user.id]);
+          this.router.navigate(['/profile']);
         },
         error: (error) => {
           console.error('Erreur lors de l’inscription', error);

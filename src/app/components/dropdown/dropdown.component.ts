@@ -8,12 +8,9 @@ import { Categorie } from '../../interfaces/categorie';
   imports: [CommonModule],
   template: `
     <button
-      id="dropdownDelayButton"
-      data-dropdown-toggle="dropdownDelay"
-      data-dropdown-delay="500"
-      data-dropdown-trigger="hover"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center "
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       type="button"
+      (click)="openOptions = !openOptions"
     >
       Categories
       <svg
@@ -35,13 +32,10 @@ import { Categorie } from '../../interfaces/categorie';
 
     <!-- Dropdown menu -->
     <div
-      id="dropdownDelay"
-      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+      *ngIf="openOptions"
+      class="z-10 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 "
     >
-      <ul
-        class="py-2 text-sm text-gray-700 dark:text-gray-200"
-        aria-labelledby="dropdownDelayButton"
-      >
+      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
         <li
           class="block px-4 py-2 hover:bg-gray-100"
           *ngFor="let category of categories"
@@ -57,7 +51,9 @@ export class DropdownComponent {
   @Input() categories: Categorie[] = [];
   @Output() fetchBooksByCategoryEvent = new EventEmitter<string>();
 
+  openOptions = false;
   fetchBooksByCategory(category: string) {
+    this.openOptions = false;
     this.fetchBooksByCategoryEvent.emit(category);
   }
 }
