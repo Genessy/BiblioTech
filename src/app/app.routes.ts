@@ -18,6 +18,6 @@ export const routes: Routes = [
     {path: 'bookcreation', canActivate: [authGuard],  component: BookCreationComponent},
     {path: 'book/:id', canActivate: [authGuard],  component: BookDetailComponent},
     {path: 'myBooks', canActivate: [authGuard], component: MyBooksViewComponent},
-    {path: 'pageCreation/:id', canActivate: [authGuard], component: CreationPageComponent}
+    {path: 'pageCreation/:id', canActivate: [authGuard], component: CreationPageComponent},
     {path: 'myBooks', canActivate: [authGuard], component: MyBooksViewComponent}
 ];
