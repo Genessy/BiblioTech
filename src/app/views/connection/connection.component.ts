@@ -77,13 +77,10 @@ export class ConnectionComponent {
   });
 
   singnUpUser(): void {
-    console.log("ZEEZERSF", this.user);
     
     if (this.user.valid) {
-      console.log("VALUUUUD");
       
       this.userService.loginUser(this.user.value).subscribe((user) => {
-        console.log(user);
         
         if (user) {
           this.router.navigate(['/']);

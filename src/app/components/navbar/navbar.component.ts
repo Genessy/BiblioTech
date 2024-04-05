@@ -43,8 +43,6 @@ import { RouterModule } from '@angular/router';
             <a [routerLink]="['/myBooks']" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mes livres</a>
             <a [routerLink]="['/bookcreation']" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Créer un livre</a>
             <a [routerLink]="['/profile']" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mon profil</a>
-            <a [routerLink]="['/signup']" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Connexion</a>
-            <a [routerLink]="['/registration']" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Inscription</a>
           </div>
         </div>
       </div>

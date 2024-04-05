@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, switchMap, tap, throwError } from 'rxjs';
 import { User } from '../interfaces/user';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -37,12 +37,25 @@ export class UsersService {
         const foundUser = users.find(
           (u) => u.email === user.email && u.password === user.password
         );
-        localStorage.setItem('user', JSON.stringify({...foundUser, IsAuthorized: true}));
-        return foundUser ? foundUser : 'User not found';
+        if (foundUser) {
+          localStorage.setItem('user', JSON.stringify({...foundUser, IsAuthorized: true}));
+          return foundUser
+        }
+        return 'User not found';
       })
     );
   }
 
+ 
+  modifyUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.basePath}/userList/${user.id}`, user).pipe(
+      switchMap(() => this.getUserById(user.id)),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        return throwError(error);
+      })
+    );
+  }
   get currentUser(): User | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;

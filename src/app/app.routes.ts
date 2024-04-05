@@ -6,13 +6,14 @@ import { BookCreationComponent } from './views/book-creation/book-creation.compo
 import { RegistrationComponent } from './views/registration/registration.component';
 import { BookDetailComponent } from './views/book-detail/book-detail.component';
 import { MyBooksViewComponent } from './views/my-books-view/my-books-view.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    {path: '', component: LandingComponent},
-    {path: 'signup', component: ConnectionComponent},
-    {path: 'registration', component: RegistrationComponent},
-    {path: 'profile', component: ProfileComponent},
-    {path: 'bookcreation', component: BookCreationComponent},
-    {path: 'book/:id', component: BookDetailComponent},
-    {path: 'myBooks', component: MyBooksViewComponent}
+    {path: '', canActivate: [authGuard], component: LandingComponent},
+    {path: 'signup',  component: ConnectionComponent},
+    {path: 'registration',  component: RegistrationComponent},
+    {path: 'profile', canActivate: [authGuard],  component: ProfileComponent},
+    {path: 'bookcreation', canActivate: [authGuard],  component: BookCreationComponent},
+    {path: 'book/:id', canActivate: [authGuard],  component: BookDetailComponent},
+    {path: 'myBooks', canActivate: [authGuard], component: MyBooksViewComponent}
 ];

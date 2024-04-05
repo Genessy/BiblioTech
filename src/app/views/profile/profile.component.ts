@@ -106,7 +106,8 @@ export class ProfileComponent {
   userBooks!: Book[];
   currentUser = this.userService.currentUser;
   ngOnInit(): void {
-    if (this.currentUser?.id !== null && this.currentUser) {
+    if (this.currentUser?.id !== null && this.currentUser) { 
+      
       this.userService.getUserById(this.currentUser.id).subscribe((user) => {
         this.userInfo = user;
       });

@@ -61,7 +61,7 @@ export class BooksService {
 
   modifyPage(page: Page, bookId: number): void {
     const book =  this.getBookById(bookId);
-
+    
     if (book) {
       book.subscribe((book) => {
         const index = book.pages.findIndex((p) => p.id === page.id);
