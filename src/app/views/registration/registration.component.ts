@@ -15,7 +15,7 @@ import { UsersService } from '../../services/users.service';
   standalone: true,
   imports: [CardComponent, RouterModule, ReactiveFormsModule],
   template: `
-    <section>
+    <section class="flex justify-center">
       <app-card>
         <form
           class="space-y-6 p-8"
@@ -122,7 +122,7 @@ export class RegistrationComponent {
       this.userService.createUser(this.user.value).subscribe({
         next: (user) => {
           console.log('Inscription réussie', user);
-          this.router.navigate(['/profile', user.id]);
+          this.router.navigate(['/profile']);
         },
         error: (error) => {
           console.error('Erreur lors de l’inscription', error);
