@@ -34,7 +34,9 @@ interface Tab {
           ></path>
         </svg>
       </div>
-      <h2 class="font-semibold text-center">{{ userInfo.firstname + ' ' + userInfo.lastname }}</h2>
+      <h2 class="font-semibold text-center">
+        {{ userInfo.firstname + ' ' + userInfo.lastname }}
+      </h2>
     </div>
     <div class="mt-9">
       <div class="sm:hidden">
@@ -58,7 +60,8 @@ interface Tab {
             <button
               class="inline-block w-full p-4 text-gray-900 bg-gray-100 border border-gray-200 rounded-lg"
               [ngClass]="{
-                'bg-gray-900 text-white border border-gray-200': activeTab === tab.id
+                'bg-gray-900 text-white border border-gray-200':
+                  activeTab === tab.id
               }"
               (click)="changeTab(tab.id)"
             >
@@ -68,12 +71,19 @@ interface Tab {
         </ng-template>
       </ul>
     </div>
-    <app-profile-views-container [activeTab]="activeTab" [user]="userInfo" [books]="userBooks"/>
+    <app-profile-views-container
+      [activeTab]="activeTab"
+      [user]="userInfo"
+      [books]="userBooks"
+    />
   </section>`,
 })
 export class ProfileComponent {
-
-  constructor(private userService: UsersService, private route: ActivatedRoute, private bookserice: BooksService) {}
+  constructor(
+    private userService: UsersService,
+    private route: ActivatedRoute,
+    private bookserice: BooksService
+  ) {}
   tabsname: Tab[] = [
     { id: 0, label: 'Profil' },
     { id: 1, label: 'Livres' },
@@ -94,19 +104,18 @@ export class ProfileComponent {
 
   userInfo!: User;
   userBooks!: Book[];
-
+  currentUser = this.userService.currentUser;
   ngOnInit(): void {
-    this.route.params.subscribe(({ id }) => {
-      this.userService.getUserById(id).subscribe((user) => {
+    if (this.currentUser?.id !== null && this.currentUser) {
+      this.userService.getUserById(this.currentUser.id).subscribe((user) => {
         this.userInfo = user;
       });
 
-      this.bookserice.getBooksByAuthor(id).subscribe((books) => {
-        this.userBooks = books;
-        
-      });
-    });
+      this.bookserice
+        .getBooksByAuthor(this.currentUser.id)
+        .subscribe((books) => {
+          this.userBooks = books;
+        });
+    }
   }
-
-  
 }

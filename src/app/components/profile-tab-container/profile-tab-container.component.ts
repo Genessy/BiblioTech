@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { SolidButtonComponent } from '../shared/solid-button/solid-button.component';
 import { ButtonAltComponent } from '../shared/button-alt/button-alt.component';
 import { User } from '../../interfaces/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-tab-container',
@@ -31,11 +32,17 @@ import { User } from '../../interfaces/user';
         </div>
         <div class="flex justify-center mt-9 gap-4">
           <app-solid-button label="Edition profil" icon="edit" />
-          <app-button-alt label="Deconnexion" icon="logout" />
+          <app-button-alt label="Deconnexion" icon="logout" (click)="logout()"/>
         </div>
       </div>
   `
 })
 export class ProfileTabContainerComponent {
 @Input() user!: User;
+
+constructor(private router: Router ) {}
+  logout(): void {
+    localStorage.removeItem('user');
+    this.router.navigate(['/signup']);
+  }
 }

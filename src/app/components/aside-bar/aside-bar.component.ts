@@ -55,6 +55,7 @@ import { RouterModule } from '@angular/router';
             label="Créer une page"
             icon="add_circle"
             class="mx-auto"
+            *ngIf="isAdminOrAuthor"
           />
         </router-link>
       </div>
@@ -64,6 +65,7 @@ import { RouterModule } from '@angular/router';
 export class AsideBarComponent {
   @Input() pages: Page[] | [] = [];
   @Input() activePage!: number
+  @Input() isAdminOrAuthor!: boolean
   @Output() selectedPage = new EventEmitter<number>();
 
   currentPage: number = this.activePage!
