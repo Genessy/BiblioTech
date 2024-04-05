@@ -87,4 +87,16 @@ export class BooksService {
       })
     );
   }
+
+  addPage(bookId: number, page: any): Observable<Book> {
+    return this.http
+      .post<Page>(`${this.basePath}/booksList/${bookId}/pages`, page)
+      .pipe(
+        switchMap(() => this.getBookById(bookId)),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return throwError(error);
+        })
+      );
+  }
 }
